@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#D52B1E">
+<meta name="description" content="Order from The Canadian Chef online: poutine, burgers, maple-glazed chicken and more.">
+<title>The Canadian Chef</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#D52B1E; --red-dark:#A81F15; --red-soft:#FDECEA;
+    --cream:#FFF7EC; --paper:#FFFFFF; --ink:#1E1A17; --muted:#6B625B;
+    --line:#EADFD2; --gold:#F2B134; --maple:#C8651B; --ok:#1E8E5A;
+    --radius:18px; --shadow:0 10px 30px rgba(60,30,10,.12);
+    --display:'Fraunces',Georgia,serif; --body:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);color:var(--ink);background:var(--cream);line-height:1.5;-webkit-font-smoothing:antialiased}
+  img,svg{display:block;max-width:100%}
+  button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .wrap{width:min(1180px,100% - 32px);margin-inline:auto}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:999px;font-weight:700;transition:transform .15s,background .15s,box-shadow .15s}
+  .btn:active{transform:scale(.97)}
+  .btn-red{background:var(--red);color:#fff}.btn-red:hover{background:var(--red-dark)}
+  .btn-white{background:#fff;color:var(--red)}.btn-white:hover{box-shadow:var(--shadow)}
+  .btn-ghost{border:2px solid var(--line);background:#fff}.btn-ghost:hover{border-color:var(--red);color:var(--red)}
+  .btn[disabled]{opacity:.55;cursor:not-allowed}
+
+  /* Header */
+  header{position:sticky;top:0;z-index:30;background:var(--red);color:#fff;box-shadow:0 2px 12px rgba(0,0,0,.18)}
+  .bar{display:flex;align-items:center;gap:14px;height:68px}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:800;line-height:1}
+  .logo svg{width:34px;height:34px}
+  .logo span small{display:block;font-family:var(--body);font-weight:600;font-size:10px;letter-spacing:.22em;opacity:.85;margin-bottom:2px}
+  .logo span b{font-size:19px;letter-spacing:.02em}
+  nav.links{margin-left:18px;display:flex;gap:4px}
+  nav.links a{padding:8px 12px;border-radius:999px;text-decoration:none;font-weight:600;font-size:14px;opacity:.92}
+  nav.links a:hover{background:rgba(255,255,255,.16)}
+  .spacer{flex:1}
+  .mode-chip{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.16);font-size:13px;font-weight:600;max-width:240px}
+  .mode-chip span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mode-chip:hover{background:rgba(255,255,255,.26)}
+  .cart-btn{position:relative;display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;background:#fff;color:var(--red);font-weight:700}
+  .cart-btn .count{min-width:22px;height:22px;padding:0 6px;border-radius:99px;background:var(--red);color:#fff;font-size:12px;display:grid;place-items:center}
+  .cart-btn.bump{animation:bump .35s}
+  @keyframes bump{40%{transform:scale(1.12)}}
+
+  /* Hero carousel */
+  .hero{position:relative;overflow:hidden;color:#fff}
+  .slides{display:flex;transition:transform .6s cubic-bezier(.7,0,.2,1)}
+  .slide{min-width:100%;min-height:440px;display:flex;align-items:center;position:relative;isolation:isolate}
+  .slide::before{content:"";position:absolute;inset:0;background:var(--bg);z-index:-2}
+  .slide::after{content:"";position:absolute;inset:0;z-index:-1;background:
+      radial-gradient(circle at 85% 20%,rgba(255,255,255,.18),transparent 40%),
+      repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0 14px,transparent 14px 28px)}
+  .slide .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;padding-block:48px}
+  .eyebrow{display:inline-block;background:rgba(255,255,255,.18);padding:6px 14px;border-radius:99px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+  .slide h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,5.4vw,66px);line-height:1.02;margin:16px 0 14px}
+  .slide p{font-size:clamp(16px,2vw,19px);max-width:46ch;opacity:.95;margin-bottom:26px}
+  .slide .art{font-size:clamp(130px,22vw,260px);text-align:center;filter:drop-shadow(0 18px 24px rgba(0,0,0,.28));animation:float 5s ease-in-out infinite}
+  @keyframes float{50%{transform:translateY(-12px) rotate(-3deg)}}
+  .hero-ctrl{position:absolute;inset:auto 0 18px 0;display:flex;justify-content:center;gap:8px}
+  .dot{width:10px;height:10px;border-radius:99px;background:rgba(255,255,255,.5);transition:width .25s,background .25s}
+  .dot[aria-current="true"]{width:30px;background:#fff}
+  .arrow{position:absolute;top:50%;translate:0 -50%;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.2);color:#fff;font-size:22px;display:grid;place-items:center;backdrop-filter:blur(4px)}
+  .arrow:hover{background:rgba(255,255,255,.35)}
+  .arrow.prev{left:12px}.arrow.next{right:12px}
+
+  /* Quick order strip */
+  .strip{margin-top:-28px;position:relative;z-index:5}
+  .strip .card{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .strip button{display:flex;gap:14px;align-items:center;padding:20px 22px;text-align:left;border-right:1px solid var(--line)}
+  .strip button:last-child{border-right:0}
+  .strip button:hover{background:var(--red-soft)}
+  .strip .ico{font-size:30px}
+  .strip b{display:block;font-size:16px}.strip small{color:var(--muted)}
+
+  /* Menu */
+  section{padding-block:56px}
+  h2.title{font-family:var(--display);font-weight:800;font-size:clamp(28px,4vw,42px);line-height:1.1}
+  .sub{color:var(--muted);margin-top:6px}
+  .cats{position:sticky;top:68px;z-index:20;background:var(--cream);padding:14px 0;margin-top:18px;border-bottom:1px solid var(--line)}
+  .cats .row{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+  .cats .row::-webkit-scrollbar{display:none}
+  .chip{flex:none;padding:10px 18px;border-radius:999px;background:#fff;border:2px solid var(--line);font-weight:600;font-size:14px;white-space:nowrap}
+  .chip:hover{border-color:var(--red)}
+  .chip[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+  .search{margin-top:14px;position:relative}
+  .search input{width:100%;padding:13px 18px 13px 44px;border-radius:999px;border:2px solid var(--line);font:inherit;background:#fff}
+  .search input:focus{outline:none;border-color:var(--red)}
+  .search::before{content:"🔍";position:absolute;left:16px;top:50%;translate:0 -50%;font-size:15px}
+  .cat-block{margin-top:34px;scroll-margin-top:190px}
+  .cat-block h3{font-family:var(--display);font-size:26px;margin-bottom:14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+  .item{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 10px rgba(60,30,10,.07);display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+  .item:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .item .pic{height:160px;display:grid;place-items:center;font-size:76px;position:relative;background:var(--tint,#FDECEA);cursor:pointer;overflow:hidden}
+  .item .pic img{width:100%;height:100%;object-fit:cover}
+  .tag{position:absolute;top:10px;left:10px;background:var(--red);color:#fff;font-size:11px;font-weight:700;letter-spacing:.06em;padding:4px 10px;border-radius:99px;text-transform:uppercase}
+  .item .body{padding:16px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .item h4{font-size:17px;line-height:1.25}
+  .item p{font-size:13.5px;color:var(--muted);flex:1}
+  .item .foot{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+  .price{font-weight:800;font-size:16px}
+  .price small{font-weight:600;color:var(--muted);font-size:12px;margin-right:2px}
+  .add{width:42px;height:42px;border-radius:50%;background:var(--red);color:#fff;font-size:24px;line-height:1;display:grid;place-items:center}
+  .add:hover{background:var(--red-dark);transform:scale(1.06)}
+  .empty{padding:40px;text-align:center;color:var(--muted)}
+
+  /* Voucher */
+  .voucher{background:var(--ink);color:#fff;border-radius:28px;display:grid;grid-template-columns:1.1fr .9fr;overflow:hidden;align-items:center}
+  .voucher .txt{padding:clamp(28px,5vw,56px)}
+  .voucher h2{font-family:var(--display);font-size:clamp(28px,4vw,44px);line-height:1.1;margin:12px 0}
+  .voucher p{opacity:.8;margin-bottom:22px;max-width:44ch}
+  .voucher .art{background:linear-gradient(135deg,var(--red),var(--maple));min-height:260px;display:grid;place-items:center;font-size:110px;height:100%}
+  .soon{display:inline-block;background:var(--gold);color:var(--ink);font-weight:700;font-size:12px;padding:3px 10px;border-radius:99px;margin-left:8px;vertical-align:middle}
+
+  /* App download + info */
+  .info{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .info .box{background:#fff;border-radius:var(--radius);padding:24px;box-shadow:0 2px 10px rgba(60,30,10,.07)}
+  .info h3{font-family:var(--display);font-size:22px;margin-bottom:8px}
+  .info ul{list-style:none;padding:0;display:grid;gap:6px;color:var(--muted);font-size:14.5px}
+  .stores{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .store{background:var(--ink);color:#fff;border-radius:12px;padding:8px 16px;font-size:12px;line-height:1.2;text-decoration:none}
+  .store b{display:block;font-size:16px}
+
+  footer{background:var(--red);color:#fff;padding:40px 0 28px}
+  footer .top{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center;padding-bottom:22px;border-bottom:1px solid rgba(255,255,255,.25)}
+  footer .legal{display:flex;gap:18px;flex-wrap:wrap;font-size:14px}
+  footer .socials{display:flex;gap:10px}
+  footer .socials a{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;text-decoration:none;font-weight:700;font-size:13px}
+  footer .socials a:hover{background:rgba(255,255,255,.32)}
+  footer small{display:block;margin-top:18px;opacity:.85;font-size:12.5px}
+
+  /* Drawer */
+  .scrim{position:fixed;inset:0;background:rgba(20,10,5,.5);opacity:0;pointer-events:none;transition:opacity .25s;z-index:50}
+  .scrim.on{opacity:1;pointer-events:auto}
+  aside.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:#fff;z-index:60;display:flex;flex-direction:column;translate:100% 0;transition:translate .3s cubic-bezier(.2,.8,.2,1)}
+  aside.drawer.on{translate:0 0}
+  .drawer header{position:static;background:none;color:inherit;box-shadow:none;padding:20px 22px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start}
+  .drawer h2{font-family:var(--display);font-size:26px}
+  .drawer header p{color:var(--muted);font-size:14px}
+  .x{width:40px;height:40px;border-radius:50%;background:var(--cream);font-size:20px;display:grid;place-items:center}
+  .x:hover{background:var(--red-soft);color:var(--red)}
+  .drawer .list{flex:1;overflow:auto;padding:8px 22px}
+  .line{display:grid;grid-template-columns:56px 1fr auto;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);align-items:center}
+  .line .thumb{width:56px;height:56px;border-radius:14px;background:var(--tint,#FDECEA);display:grid;place-items:center;font-size:30px}
+  .line b{font-size:15px;display:block}.line small{color:var(--muted);display:block;font-size:12.5px}
+  .qty{display:inline-flex;align-items:center;gap:2px;margin-top:6px;background:var(--cream);border-radius:99px}
+  .qty button{width:30px;height:30px;border-radius:50%;font-size:18px;font-weight:700}
+  .qty button:hover{background:var(--red-soft);color:var(--red)}
+  .qty span{min-width:24px;text-align:center;font-weight:700;font-size:14px}
+  .line .lp{font-weight:700;font-size:14px;white-space:nowrap}
+  .cart-empty{display:grid;place-items:center;text-align:center;gap:10px;padding:60px 20px;color:var(--muted)}
+  .cart-empty .big{font-size:70px}
+  .sum{padding:16px 22px 22px;border-top:1px solid var(--line);background:#fff;display:grid;gap:8px}
+  .sum .r{display:flex;justify-content:space-between;font-size:14.5px;color:var(--muted)}
+  .sum .r.t{color:var(--ink);font-weight:800;font-size:18px;padding-top:8px;border-top:1px dashed var(--line)}
+  .sum .note{font-size:12.5px;color:var(--ok);font-weight:600}
+
+  /* Dialogs */
+  dialog{border:0;border-radius:24px;padding:0;width:min(520px,calc(100% - 24px));max-height:92vh;box-shadow:0 30px 80px rgba(0,0,0,.35);color:var(--ink)}
+  dialog::backdrop{background:rgba(20,10,5,.55);backdrop-filter:blur(3px)}
+  dialog[open]{animation:pop .22s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(14px) scale(.98)}}
+  .dlg{padding:24px;display:grid;gap:16px;max-height:92vh;overflow:auto}
+  .dlg h3{font-family:var(--display);font-size:26px;line-height:1.1}
+  .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .seg label{position:relative}
+  .seg input{position:absolute;opacity:0;inset:0;cursor:pointer}
+  .seg span{display:grid;gap:2px;justify-items:center;padding:14px 6px;border-radius:14px;border:2px solid var(--line);font-weight:700;font-size:14px;text-align:center}
+  .seg span em{font-style:normal;font-size:26px}
+  .seg input:checked+span{border-color:var(--red);background:var(--red-soft);color:var(--red)}
+  .seg input:focus-visible+span{outline:3px solid var(--gold)}
+  .field{display:grid;gap:6px;font-size:14px;font-weight:600}
+  .field input,.field select,.field textarea{padding:12px 14px;border-radius:12px;border:2px solid var(--line);font:inherit;font-weight:400;background:#fff;width:100%}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--red)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .opt-group{border:0;padding:0;display:grid;gap:8px}
+  .opt-group legend{font-weight:700;margin-bottom:6px}
+  .opt{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border:2px solid var(--line);border-radius:12px;cursor:pointer;font-size:14.5px}
+  .opt:has(input:checked){border-color:var(--red);background:var(--red-soft)}
+  .opt input{accent-color:var(--red);margin-right:8px}
+  .opt small{color:var(--muted)}
+  .dlg .hero-pic{height:150px;border-radius:16px;display:grid;place-items:center;font-size:84px;background:var(--tint,#FDECEA)}
+  .done{text-align:center;display:grid;gap:10px;justify-items:center;padding:12px 0}
+  .done .big{font-size:64px}
+  .code{font-family:ui-monospace,Menlo,monospace;background:var(--cream);padding:8px 16px;border-radius:10px;font-weight:700;letter-spacing:.08em}
+
+  .toast{position:fixed;left:50%;bottom:24px;translate:-50% 140px;background:var(--ink);color:#fff;padding:12px 20px;border-radius:99px;font-weight:600;font-size:14px;z-index:90;transition:translate .3s;box-shadow:var(--shadow);max-width:calc(100% - 32px)}
+  .toast.on{translate:-50% 0}
+
+  @media (max-width:860px){
+    nav.links{display:none}
+    .slide .wrap{grid-template-columns:1fr;text-align:center;padding-block:36px 64px}
+    .slide p{margin-inline:auto}.slide .art{order:-1;font-size:120px}
+    .slide{min-height:520px}
+    .arrow{display:none}
+    .strip .card{grid-template-columns:1fr}.strip button{border-right:0;border-bottom:1px solid var(--line)}
+    .voucher{grid-template-columns:1fr}.voucher .art{min-height:180px;order:-1}
+    .info{grid-template-columns:1fr}
+    .mode-chip{display:none}
+    .cart-btn .label{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="#top" aria-label="The Canadian Chef home">
+      <!-- Simple original maple-leaf mark -->
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#fff" d="M32 4l5 11 7-3-2 14 9-5-3 11 7 2-14 9 2 6-6-2v11h-2V48l-6 2 2-6-14-9 7-2-3-11 9 5-2-14 7 3z"/></svg>
+      <span><small>THE</small><b>CANADIAN CHEF</b></span>
+    </a>
+    <nav class="links" aria-label="Primary">
+      <a href="#menu">Menu</a><a href="#voucher">Gift vouchers</a><a href="#visit">Find us</a>
+    </nav>
+    <div class="spacer"></div>
+    <button class="mode-chip" id="modeChip" aria-label="Change order type"><span id="modeText">Choose service</span> ✎</button>
+    <button class="cart-btn" id="cartBtn" aria-label="Open your order">🛒 <span class="label">Order</span> <span class="count" id="cartCount">0</span></button>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <div class="hero" aria-roledescription="carousel" aria-label="Featured offers">
+    <div class="slides" id="slides"></div>
+    <button class="arrow prev" id="prev" aria-label="Previous slide">‹</button>
+    <button class="arrow next" id="next" aria-label="Next slide">›</button>
+    <div class="hero-ctrl" id="dots"></div>
+  </div>
+
+  <!-- QUICK START -->
+  <div class="strip"><div class="wrap"><div class="card">
+    <button data-start="delivery"><span class="ico">🛵</span><span><b>Delivery</b><small>Straight to your door</small></span></button>
+    <button data-start="pickup"><span class="ico">🥡</span><span><b>Pickup</b><small>Skip the queue, keep the flavour</small></span></button>
+    <button data-start="dinein"><span class="ico">🍽️</span><span><b>Dine in</b><small>Reserve and pre-order</small></span></button>
+  </div></div></div>
+
+  <!-- MENU -->
+  <section id="menu">
+    <div class="wrap">
+      <h2 class="title">Browse our menu</h2>
+      <p class="sub">Canadian comfort food, made fresh by our chefs.</p>
+      <div class="cats"><div class="row" id="cats" role="group" aria-label="Menu categories"></div>
+        <label class="search"><span class="sr" style="position:absolute;left:-9999px">Search the menu</span><input id="q" type="search" placeholder="Search poutine, burgers, maple…" autocomplete="off"></label>
+      </div>
+      <div id="menuOut"></div>
+    </div>
+  </section>
+
+  <!-- VOUCHER -->
+  <section id="voucher" style="padding-top:8px">
+    <div class="wrap"><div class="voucher">
+      <div class="txt">
+        <span class="eyebrow">TCC Voucher<span class="soon">Coming soon</span></span>
+        <h2>Give the gift of great Canadian flavour</h2>
+        <p>Send a meal straight to someone's phone. Perfect for birthdays, thank-yous and "just because".</p>
+        <button class="btn btn-red" id="notify">Notify me</button>
+      </div>
+      <div class="art" aria-hidden="true">🎁</div>
+    </div></div>
+  </section>
+
+  <!-- VISIT -->
+  <section id="visit" style="padding-top:8px">
+    <div class="wrap info">
+      <div class="box"><h3>Find us</h3><ul>
+        <li id="iAddr"></li><li id="iPhone"></li><li id="iMail"></li></ul></div>
+      <div class="box"><h3>Opening hours</h3><ul id="iHours"></ul></div>
+      <div class="box"><h3>Get the TCC app</h3>
+        <p style="color:var(--muted);font-size:14.5px">Order faster, track your delivery and collect rewards.</p>
+        <div class="stores"><a class="store" href="#" data-soon>Download on the<b>App Store</b></a><a class="store" href="#" data-soon>Get it on<b>Google Play</b></a></div></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="top">
+      <a class="logo" href="#top"><svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#fff" d="M32 4l5 11 7-3-2 14 9-5-3 11 7 2-14 9 2 6-6-2v11h-2V48l-6 2 2-6-14-9 7-2-3-11 9 5-2-14 7 3z"/></svg><span><small>THE</small><b>CANADIAN CHEF</b></span></a>
+      <div class="legal"><a href="#">Privacy Policy</a><a href="#">Terms &amp; Conditions</a></div>
+      <div class="socials"><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="X">X</a><a href="#" aria-label="Instagram">ig</a></div>
+    </div>
+    <small>Item availability, prices, delivery areas and charges may vary. © <span id="yr"></span> The Canadian Chef. All rights reserved.</small>
+  </div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Your order" aria-hidden="true">
+  <header>
+    <div><h2>Hi there 👋</h2><p>Here is your order</p></div>
+    <button class="x" id="closeDrawer" aria-label="Close order">✕</button>
+  </header>
+  <div class="list" id="cartList"></div>
+  <div class="sum" id="cartSum"></div>
+</aside>
+
+<!-- ORDER TYPE DIALOG -->
+<dialog id="dStart"><form method="dialog" class="dlg" id="startForm">
+  <h3>Get started</h3>
+  <div class="seg" role="radiogroup" aria-label="Order type">
+    <label><input type="radio" name="type" value="delivery" checked><span><em>🛵</em>Delivery</span></label>
+    <label><input type="radio" name="type" value="pickup"><span><em>🥡</em>Pickup</span></label>
+    <label><input type="radio" name="type" value="dinein"><span><em>🍽️</em>Dine in</span></label>
+  </div>
+  <label class="field" id="addrField">Delivery address
+    <input id="addr" placeholder="e.g. KG 7 Ave, Kiyovu, Kigali" autocomplete="street-address"></label>
+  <label class="field" id="branchField" hidden>Restaurant
+    <select id="branch"></select></label>
+  <div style="display:flex;gap:10px;justify-content:flex-end">
+    <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+    <button class="btn btn-red" value="ok">Continue</button>
+  </div>
+</form></dialog>
+
+<!-- ITEM DIALOG -->
+<dialog id="dItem"><form method="dialog" class="dlg" id="itemForm"></form></dialog>
+
+<!-- CHECKOUT DIALOG -->
+<dialog id="dCheckout"><form class="dlg" id="checkoutForm" novalidate>
+  <h3>Checkout</h3>
+  <p id="coSummary" style="color:var(--muted);font-size:14px"></p>
+  <div class="two">
+    <label class="field">Your name<input name="name" required autocomplete="name"></label>
+    <label class="field">Phone (MoMo)<input name="phone" required inputmode="tel" placeholder="078 000 0000" autocomplete="tel"></label>
+  </div>
+  <label class="field" id="coAddr">Delivery address<input name="address" autocomplete="street-address"></label>
+  <label class="field">Notes for the kitchen (optional)<textarea name="notes" rows="2" placeholder="No onions, extra gravy…"></textarea></label>
+  <fieldset class="opt-group"><legend>Payment</legend>
+    <label class="opt"><span><input type="radio" name="pay" value="mtn" checked>MTN Mobile Money</span><small>Pay on confirm</small></label>
+    <label class="opt"><span><input type="radio" name="pay" value="airtel">Airtel Money</span><small>Pay on confirm</small></label>
+    <label class="opt"><span><input type="radio" name="pay" value="cash">Cash on delivery / pickup</span><small></small></label>
+  </fieldset>
+  <p id="coError" role="alert" style="color:var(--red);font-weight:600;font-size:14px" hidden></p>
+  <div style="display:flex;gap:10px;justify-content:flex-end">
+    <button type="button" class="btn btn-ghost" data-close>Back</button>
+    <button class="btn btn-red" id="placeBtn">Place order</button>
+  </div>
+</form></dialog>
+
+<!-- SUCCESS DIALOG -->
+<dialog id="dDone"><div class="dlg"><div class="done">
+  <div class="big">🎉</div><h3>Order received!</h3>
+  <p id="doneMsg" style="color:var(--muted)"></p>
+  <div class="code" id="doneCode"></div>
+  <button class="btn btn-red" data-close>Back to menu</button>
+</div></div></dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =========================================================
+   1. BRAND + RESTAURANT CONFIG  — EDIT ME
+   Everything marked PLACEHOLDER should be replaced with the
+   restaurant's real details.
+   ========================================================= */
+const TCC = {
+  name: 'The Canadian Chef',
+  currency: 'RWF',
+  address: 'PLACEHOLDER: street, neighbourhood, Kigali, Rwanda',
+  phone:   '+250 7XX XXX XXX',                 // PLACEHOLDER
+  email:   'hello@example.com',                // PLACEHOLDER
+  hours: [                                      // PLACEHOLDER
+    ['Mon – Thu', '10:00 – 22:00'],
+    ['Fri – Sat', '10:00 – 23:30'],
+    ['Sunday',    '11:00 – 21:00'],
+  ],
+  branches: ['Main restaurant (PLACEHOLDER)'],  // add more branches here
+  deliveryFee: 1500,
+  freeDeliveryOver: 20000,
+};
+
+/* Hero slides: bg is any CSS background. Swap `art` emoji for real photos
+   by changing renderHero() to output an <img>. */
+const SLIDES = [
+  { eyebrow:'Fresh from our kitchen', title:'Your favourite Canadian meals, just a tap away.', text:'Poutine, burgers and maple-glazed chicken, cooked to order.', cta:'Order now', go:'all', art:'🍟',
+    bg:'linear-gradient(120deg,#D52B1E,#9E1B12)' },
+  { eyebrow:'Delivery', title:'The Canadian Chef, straight to your door.', text:'Hot, fast and right on time across Kigali.', cta:'Start delivery', go:'delivery', art:'🛵',
+    bg:'linear-gradient(120deg,#C8651B,#8F3F0C)' },
+  { eyebrow:'Signature', title:'Meet the Lumberjack Burger.', text:'Double beef, aged cheddar, smoky bacon and our maple-BBQ sauce.', cta:'Add to order', go:'burgers', art:'🍔',
+    bg:'linear-gradient(120deg,#2B2420,#59372A)' },
+  { eyebrow:'Sweet finish', title:'Maple on everything. Yes, everything.', text:'Nanaimo bars, maple pie and sundaes to finish your meal.', cta:'See desserts', go:'desserts', art:'🥧',
+    bg:'linear-gradient(120deg,#E0961B,#B7620E)' },
+];
+
+/* Reusable option groups for customisation */
+const OPT = {
+  size:  { id:'size',  label:'Size',   type:'radio', req:true,  choices:[{l:'Regular',p:0},{l:'Large',p:1000}] },
+  extra: { id:'extra', label:'Add extras', type:'check', choices:[{l:'Extra cheese curds',p:800},{l:'Crispy bacon',p:1000},{l:'Extra gravy',p:500}] },
+  sauce: { id:'sauce', label:'Choose a dip', type:'radio', req:true, choices:[{l:'Maple BBQ',p:0},{l:'Garlic mayo',p:0},{l:'Hot honey',p:300}] },
+  drink: { id:'drink', label:'Choose a drink', type:'radio', req:true, choices:[{l:'Cola',p:0},{l:'Orange soda',p:0},{l:'Bottled water',p:0}] },
+};
+
+/* Menu — PLACEHOLDER items & prices. `img` is optional (URL) and overrides the emoji. */
+const CATS = [
+  {id:'combos',    name:'Combos'},
+  {id:'burgers',   name:'Burgers'},
+  {id:'poutine',   name:'Poutine'},
+  {id:'chicken',   name:'Chicken'},
+  {id:'wraps',     name:'Sandwiches & Wraps'},
+  {id:'sides',     name:'Sides'},
+  {id:'desserts',  name:'Desserts'},
+  {id:'drinks',    name:'Drinks'},
+];
+const MENU = [
+  // Combos
+  {id:'c1',cat:'combos',name:"Chef's Combo",desc:'Lumberjack Burger, regular fries and a drink.',price:10500,e:'🍔',tint:'#FDECEA',tag:'Best seller',opts:[OPT.drink]},
+  {id:'c2',cat:'combos',name:'Poutine Feast for 4',desc:'Four classic poutines, 12 wings and four drinks.',price:34000,e:'🍟',tint:'#FFF1D6',tag:'Share',opts:[]},
+  {id:'c3',cat:'combos',name:'Student Combo',desc:'Chicken wrap, fries and a soda. Great value.',price:6500,e:'🌯',tint:'#E8F3E6',opts:[OPT.drink]},
+  // Burgers
+  {id:'b1',cat:'burgers',name:'Lumberjack Burger',desc:'Double beef, aged cheddar, bacon, maple-BBQ sauce.',price:7500,e:'🍔',tint:'#FDECEA',tag:'Signature',opts:[OPT.extra]},
+  {id:'b2',cat:'burgers',name:'Maple Crunch Chicken Burger',desc:'Crispy chicken, maple glaze, pickles, slaw.',price:6500,e:'🍗',tint:'#FFF1D6',opts:[OPT.extra]},
+  {id:'b3',cat:'burgers',name:'Veggie Mountain Burger',desc:'Seasoned bean patty, avocado, tomato, greens.',price:6000,e:'🥬',tint:'#E8F3E6',opts:[]},
+  // Poutine
+  {id:'p1',cat:'poutine',name:'Classic Poutine',desc:'Crisp fries, squeaky cheese curds, rich brown gravy.',price:5000,e:'🍟',tint:'#FFF1D6',tag:'Classic',opts:[OPT.size,OPT.extra]},
+  {id:'p2',cat:'poutine',name:'Chicken Poutine',desc:'Classic poutine topped with crispy chicken pieces.',price:6500,e:'🍗',tint:'#FDECEA',opts:[OPT.size,OPT.extra]},
+  {id:'p3',cat:'poutine',name:'Loaded Beef Poutine',desc:'Slow-cooked beef, caramelised onions, cheese curds.',price:7000,e:'🥩',tint:'#F6E4D8',opts:[OPT.size,OPT.extra]},
+  // Chicken
+  {id:'k1',cat:'chicken',name:'Maple Glazed Wings (6)',desc:'Sticky, sweet and a little smoky.',price:6000,e:'🍗',tint:'#FFF1D6',opts:[OPT.sauce]},
+  {id:'k2',cat:'chicken',name:'Crispy Tenders (5)',desc:'Hand-breaded, golden and juicy.',price:6500,e:'🍤',tint:'#FDECEA',opts:[OPT.sauce]},
+  {id:'k3',cat:'chicken',name:'Rotisserie Half Chicken',desc:'Slow-roasted with herb butter and two sides.',price:12000,e:'🍖',tint:'#F6E4D8',opts:[]},
+  // Wraps
+  {id:'w1',cat:'wraps',name:'Peameal Bacon Sandwich',desc:'Cornmeal-crusted bacon on a toasted bun with mustard.',price:5500,e:'🥪',tint:'#FFF1D6',opts:[OPT.extra]},
+  {id:'w2',cat:'wraps',name:'Chicken Caesar Wrap',desc:'Grilled chicken, romaine, parmesan, Caesar dressing.',price:5500,e:'🌯',tint:'#E8F3E6',opts:[]},
+  {id:'w3',cat:'wraps',name:'Grilled Cheese & Tomato Soup',desc:'Three-cheese toastie with a bowl of tomato soup.',price:4500,e:'🧀',tint:'#FDECEA',opts:[]},
+  // Sides
+  {id:'s1',cat:'sides',name:'Fries',desc:'Skin-on and salted.',price:2000,e:'🍟',tint:'#FFF1D6',opts:[OPT.size]},
+  {id:'s2',cat:'sides',name:'Onion Rings',desc:'Beer-battered and crunchy.',price:2500,e:'🧅',tint:'#F6E4D8',opts:[]},
+  {id:'s3',cat:'sides',name:'Creamy Coleslaw',desc:'Cool, crisp and tangy.',price:1500,e:'🥗',tint:'#E8F3E6',opts:[]},
+  // Desserts
+  {id:'d1',cat:'desserts',name:'Nanaimo Bar',desc:'Chocolate, custard and coconut layers.',price:2500,e:'🍫',tint:'#F3E3D6',opts:[]},
+  {id:'d2',cat:'desserts',name:'Maple Pie Slice',desc:'Silky maple filling in a buttery crust.',price:3500,e:'🥧',tint:'#FFF1D6',tag:'Sweet',opts:[]},
+  {id:'d3',cat:'desserts',name:'Maple Sundae',desc:'Vanilla ice cream, maple syrup, toasted nuts.',price:3000,e:'🍨',tint:'#FDECEA',opts:[]},
+  // Drinks
+  {id:'r1',cat:'drinks',name:'Soft Drink',desc:'Ice-cold, your choice of flavour.',price:1000,e:'🥤',tint:'#FDECEA',opts:[OPT.drink]},
+  {id:'r2',cat:'drinks',name:'Fresh Juice',desc:'Seasonal fruit, pressed daily.',price:2000,e:'🍹',tint:'#FFF1D6',opts:[]},
+  {id:'r3',cat:'drinks',name:'Iced Maple Latte',desc:'Rwandan coffee, milk and a drizzle of maple.',price:3000,e:'☕',tint:'#F3E3D6',opts:[OPT.size]},
+  {id:'r4',cat:'drinks',name:'Bottled Water',desc:'Still, 500 ml.',price:500,e:'💧',tint:'#E4F1F8',opts:[]},
+];
+
+/* =========================================================
+   2. STATE + HELPERS
+   ========================================================= */
+const $  = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const money = n => `${TCC.currency} ${Math.round(n).toLocaleString('en-US')}`;
+const MODE_LABEL = { delivery:'Delivery', pickup:'Pickup', dinein:'Dine in' };
+const KEY = 'tcc-app-v1';
+
+let state = { mode:null, place:'', cart:[] };
+let activeCat = 'all', query = '';
+
+try { Object.assign(state, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch(e){}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} };
+
+const byId = id => MENU.find(m => m.id === id);
+const lineKey = (id, sel) => id + '|' + sel.map(s => s.g + ':' + s.l).sort().join(',');
+const lineUnit = l => { const it = byId(l.id); return it.price + l.sel.reduce((a,s)=>a+s.p,0); };
+const subtotal = () => state.cart.reduce((a,l)=>a + lineUnit(l)*l.q, 0);
+const count = () => state.cart.reduce((a,l)=>a+l.q, 0);
+const deliveryCost = () => state.mode !== 'delivery' || state.cart.length === 0 ? 0 : (subtotal() >= TCC.freeDeliveryOver ? 0 : TCC.deliveryFee);
+
+let toastTimer;
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('on'),2200); }
+
+/* Dialog helpers */
+function openDlg(d){ if(!d.open) d.showModal(); }
+$$('dialog').forEach(d => {
+  d.addEventListener('click', e => { if (e.target === d) d.close(); });          // click backdrop
+  $$('[data-close]', d).forEach(b => b.addEventListener('click', () => d.close()));
+});
+
+/* =========================================================
+   3. HERO CAROUSEL
+   ========================================================= */
+let slideIdx = 0, slideTimer;
+function renderHero(){
+  $('#slides').innerHTML = SLIDES.map((s,i)=>`
+    <div class="slide" style="--bg:${s.bg}" role="group" aria-roledescription="slide" aria-label="${i+1} of ${SLIDES.length}">
+      <div class="wrap">
+        <div>
+          <span class="eyebrow">${s.eyebrow}</span>
+          <h1>${s.title}</h1>
+          <p>${s.text}</p>
+          <button class="btn btn-white" data-slide-go="${s.go}">${s.cta} →</button>
+        </div>
+        <div class="art" aria-hidden="true">${s.art}</div>
+      </div>
+    </div>`).join('');
+  $('#dots').innerHTML = SLIDES.map((_,i)=>`<button class="dot" aria-label="Go to slide ${i+1}" data-dot="${i}"></button>`).join('');
+  goSlide(0);
+  $$('[data-slide-go]').forEach(b => b.addEventListener('click', () => {
+    const g = b.dataset.slideGo;
+    if (MODE_LABEL[g]) startFlow(g);
+    else { setCat(g === 'all' ? 'all' : g); $('#menu').scrollIntoView(); }
+  }));
+  $$('[data-dot]').forEach(d => d.addEventListener('click', () => { goSlide(+d.dataset.dot); restartAuto(); }));
+}
+function goSlide(i){
+  slideIdx = (i + SLIDES.length) % SLIDES.length;
+  $('#slides').style.transform = `translateX(-${slideIdx*100}%)`;
+  $$('.dot').forEach((d,n)=>d.setAttribute('aria-current', n===slideIdx));
+}
+function restartAuto(){ clearInterval(slideTimer); if(!matchMedia('(prefers-reduced-motion:reduce)').matches) slideTimer=setInterval(()=>goSlide(slideIdx+1),6000); }
+$('#prev').onclick = () => { goSlide(slideIdx-1); restartAuto(); };
+$('#next').onclick = () => { goSlide(slideIdx+1); restartAuto(); };
+$('.hero').addEventListener('mouseenter', () => clearInterval(slideTimer));
+$('.hero').addEventListener('mouseleave', restartAuto);
+
+/* =========================================================
+   4. MENU
+   ========================================================= */
+function renderCats(){
+  const all = [{id:'all',name:'All'}, ...CATS];
+  $('#cats').innerHTML = all.map(c=>`<button class="chip" data-cat="${c.id}" aria-pressed="${c.id===activeCat}">${c.name}</button>`).join('');
+  $$('#cats .chip').forEach(b => b.addEventListener('click', () => setCat(b.dataset.cat)));
+}
+function setCat(id){ activeCat = id; renderCats(); renderMenu(); if(id!=='all'){ const el=$('#cat-'+id); el && el.scrollIntoView(); } }
+
+function card(it){
+  const pic = it.img ? `<img src="${it.img}" alt="${it.name}" loading="lazy">` : it.e;
+  const from = it.opts.some(o=>o.req && o.choices.some(c=>c.p>0)) ? '<small>from</small>' : '';
+  return `<article class="item">
+    <div class="pic" style="--tint:${it.tint}" data-open="${it.id}" role="button" tabindex="0" aria-label="Customise ${it.name}">${it.tag?`<span class="tag">${it.tag}</span>`:''}${pic}</div>
+    <div class="body"><h4>${it.name}</h4><p>${it.desc}</p>
+      <div class="foot"><span class="price">${from}${money(it.price)}</span>
+      <button class="add" data-open="${it.id}" aria-label="Add ${it.name}">+</button></div></div></article>`;
+}
+function renderMenu(){
+  const q = query.trim().toLowerCase();
+  const match = it => !q || (it.name + ' ' + it.desc).toLowerCase().includes(q);
+  let html = '';
+  CATS.filter(c => activeCat==='all' || c.id===activeCat).forEach(c => {
+    const items = MENU.filter(m => m.cat===c.id && match(m));
+    if (items.length) html += `<div class="cat-block" id="cat-${c.id}"><h3>${c.name}</h3><div class="grid">${items.map(card).join('')}</div></div>`;
+  });
+  $('#menuOut').innerHTML = html || `<div class="empty">Nothing matches “${q.replace(/[<>&]/g,'')}”. Try another dish.</div>`;
+  $$('[data-open]').forEach(el => {
+    el.addEventListener('click', () => openItem(el.dataset.open));
+    el.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openItem(el.dataset.open);} });
+  });
+}
+$('#q').addEventListener('input', e => { query = e.target.value; renderMenu(); });
+
+/* ---------- Item customisation ---------- */
+function openItem(id){
+  const it = byId(id), f = $('#itemForm');
+  const groups = it.opts.map(g => `
+    <fieldset class="opt-group"><legend>${g.label}${g.req?' <small style="color:var(--red)">required</small>':''}</legend>
+    ${g.choices.map((c,i)=>`<label class="opt"><span><input type="${g.type==='radio'?'radio':'checkbox'}" name="${g.id}" value="${i}" ${g.req&&i===0?'checked':''}>${c.l}</span><small>${c.p?'+ '+money(c.p):''}</small></label>`).join('')}
+    </fieldset>`).join('');
+  f.innerHTML = `
+    <div class="hero-pic" style="--tint:${it.tint}">${it.img?`<img src="${it.img}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:16px">`:it.e}</div>
+    <div><h3>${it.name}</h3><p style="color:var(--muted);margin-top:4px">${it.desc}</p></div>
+    ${groups}
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <div class="qty" id="itemQty"><button type="button" data-d="-1" aria-label="Less">−</button><span id="iq">1</span><button type="button" data-d="1" aria-label="More">+</button></div>
+      <div style="display:flex;gap:10px"><button type="button" class="btn btn-ghost" data-close>Cancel</button>
+      <button class="btn btn-red" id="itemAdd" value="add"></button></div>
+    </div>`;
+  let q = 1;
+  const read = () => {
+    const sel = [];
+    it.opts.forEach(g => $$(`[name="${g.id}"]:checked`, f).forEach(inp => { const c = g.choices[+inp.value]; sel.push({g:g.id,l:c.l,p:c.p}); }));
+    return sel;
+  };
+  const refresh = () => {
+    $('#iq', f).textContent = q;
+    const unit = it.price + read().reduce((a,s)=>a+s.p,0);
+    $('#itemAdd', f).textContent = `Add to order · ${money(unit*q)}`;
+  };
+  f.oninput = refresh;
+  $$('#itemQty button', f).forEach(b => b.onclick = () => { q = Math.max(1, Math.min(20, q + +b.dataset.d)); refresh(); });
+  $('[data-close]', f).onclick = () => $('#dItem').close();
+  f.onsubmit = e => { e.preventDefault(); addToCart(id, read(), q); $('#dItem').close(); };
+  refresh();
+  openDlg($('#dItem'));
+}
+
+/* =========================================================
+   5. CART
+   ========================================================= */
+function addToCart(id, sel, q){
+  if (!state.mode) { pending = {id, sel, q}; return startFlow(); }
+  const key = lineKey(id, sel), ex = state.cart.find(l => l.key === key);
+  ex ? ex.q += q : state.cart.push({key, id, sel, q});
+  save(); renderCart(); toast(`Added ${byId(id).name} to your order`);
+  const b = $('#cartBtn'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
+}
+function renderCart(){
+  $('#cartCount').textContent = count();
+  const list = $('#cartList'), sum = $('#cartSum');
+  if (!state.cart.length){
+    list.innerHTML = `<div class="cart-empty"><div class="big">🛒</div><b style="color:var(--ink)">Your cart is empty</b><span>Add items to start your order.</span><button class="btn btn-red" id="browse">Browse menu</button></div>`;
+    sum.innerHTML = ''; $('#browse').onclick = () => { closeDrawer(); $('#menu').scrollIntoView(); };
+    return;
+  }
+  list.innerHTML = state.cart.map(l => {
+    const it = byId(l.id);
+    return `<div class="line"><div class="thumb" style="--tint:${it.tint}">${it.e}</div>
+      <div><b>${it.name}</b>${l.sel.length?`<small>${l.sel.map(s=>s.l).join(', ')}</small>`:''}
+        <div class="qty"><button data-k="${l.key}" data-d="-1" aria-label="Remove one">−</button><span>${l.q}</span><button data-k="${l.key}" data-d="1" aria-label="Add one">+</button></div></div>
+      <div class="lp">${money(lineUnit(l)*l.q)}</div></div>`;
+  }).join('');
+  $$('.line .qty button', list).forEach(b => b.onclick = () => {
+    const l = state.cart.find(x => x.key === b.dataset.k); l.q += +b.dataset.d;
+    if (l.q <= 0) state.cart = state.cart.filter(x => x !== l);
+    save(); renderCart();
+  });
+  const sub = subtotal(), del = deliveryCost(), total = sub + del;
+  const left = TCC.freeDeliveryOver - sub;
+  sum.innerHTML = `
+    <div class="r"><span>Subtotal</span><span>${money(sub)}</span></div>
+    ${state.mode==='delivery'?`<div class="r"><span>Delivery</span><span>${del?money(del):'Free'}</span></div>`:''}
+    ${state.mode==='delivery' && left>0?`<div class="note">Add ${money(left)} more for free delivery</div>`:''}
+    <div class="r t"><span>Total</span><span>${money(total)}</span></div>
+    <button class="btn btn-red" id="goCheckout" style="margin-top:6px">Checkout →</button>`;
+  $('#goCheckout').onclick = openCheckout;
+}
+function openDrawer(){ renderCart(); $('#drawer').classList.add('on'); $('#scrim').classList.add('on'); $('#drawer').setAttribute('aria-hidden','false'); }
+function closeDrawer(){ $('#drawer').classList.remove('on'); $('#scrim').classList.remove('on'); $('#drawer').setAttribute('aria-hidden','true'); }
+$('#cartBtn').onclick = openDrawer; $('#closeDrawer').onclick = closeDrawer; $('#scrim').onclick = closeDrawer;
+document.addEventListener('keydown', e => { if (e.key==='Escape') closeDrawer(); });
+
+/* =========================================================
+   6. ORDER TYPE FLOW
+   ========================================================= */
+let pending = null;
+function syncStartForm(){
+  const m = $('input[name=type]:checked', $('#startForm')).value;
+  $('#addrField').hidden = m !== 'delivery';
+  $('#branchField').hidden = m === 'delivery';
+}
+function startFlow(mode){
+  const f = $('#startForm');
+  $('#branch').innerHTML = TCC.branches.map(b=>`<option>${b}</option>`).join('');
+  if (mode || state.mode) $(`input[name=type][value=${mode||state.mode}]`, f).checked = true;
+  $('#addr').value = state.mode==='delivery' ? state.place : '';
+  syncStartForm(); openDlg($('#dStart'));
+}
+$$('input[name=type]', $('#startForm')).forEach(r => r.addEventListener('change', syncStartForm));
+$('#startForm').addEventListener('submit', e => {
+  const m = $('input[name=type]:checked', e.target).value;
+  if (m === 'delivery' && !$('#addr').value.trim()){ e.preventDefault(); $('#addr').focus(); toast('Please add a delivery address'); return; }
+  state.mode = m; state.place = m==='delivery' ? $('#addr').value.trim() : $('#branch').value;
+  save(); updateChip(); renderCart();
+  if (pending){ const p = pending; pending = null; addToCart(p.id, p.sel, p.q); }
+});
+$('#dStart').addEventListener('close', () => { if ($('#dStart').returnValue !== 'ok') pending = null; $('#dStart').returnValue = ''; });
+function updateChip(){ $('#modeText').textContent = state.mode ? `${MODE_LABEL[state.mode]} · ${state.place}` : 'Choose service'; }
+$('#modeChip').onclick = () => startFlow();
+$$('[data-start]').forEach(b => b.onclick = () => startFlow(b.dataset.start));
+
+/* =========================================================
+   7. CHECKOUT
+   ========================================================= */
+function openCheckout(){
+  if (!state.cart.length) return;
+  closeDrawer();
+  const total = subtotal() + deliveryCost();
+  $('#coSummary').textContent = `${count()} item${count()>1?'s':''} · ${MODE_LABEL[state.mode]} · ${state.place} · ${money(total)}`;
+  const f = $('#checkoutForm');
+  $('#coAddr').hidden = state.mode !== 'delivery';
+  f.address.value = state.mode === 'delivery' ? state.place : '';
+  $('#coError').hidden = true;
+  openDlg($('#dCheckout'));
+}
+$('#checkoutForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = e.target, err = $('#coError');
+  const phone = f.phone.value.replace(/[\s-]/g,'');
+  if (!f.name.value.trim()) return fail('Please enter your name.');
+  if (!/^(\+?250|0)?7[2389]\d{7}$/.test(phone)) return fail('Enter a valid Rwandan mobile number, e.g. 078 000 0000.');
+  if (state.mode==='delivery' && !f.address.value.trim()) return fail('Please enter a delivery address.');
+  function fail(m){ err.textContent = m; err.hidden = false; }
+  err.hidden = true;
+
+  const order = {
+    mode: state.mode, place: state.place,
+    customer: { name:f.name.value.trim(), phone, address:f.address.value.trim(), notes:f.notes.value.trim() },
+    payment: f.pay.value,
+    items: state.cart.map(l => ({ id:l.id, name:byId(l.id).name, qty:l.q, options:l.sel.map(s=>s.l), unit:lineUnit(l) })),
+    subtotal: subtotal(), delivery: deliveryCost(), total: subtotal()+deliveryCost(),
+  };
+  const btn = $('#placeBtn'); btn.disabled = true; btn.textContent = 'Placing…';
+  try {
+    /* TODO: send to your backend, e.g.
+       await fetch('/api/orders', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(order)});
+       For now we simulate a successful response. */
+    await new Promise(r => setTimeout(r, 700));
+    const code = 'TCC-' + Math.random().toString(36).slice(2,6).toUpperCase() + Math.floor(100+Math.random()*900);
+    $('#dCheckout').close();
+    $('#doneCode').textContent = code;
+    $('#doneMsg').textContent = `Thanks, ${order.customer.name.split(' ')[0]}! ` + (order.mode==='delivery' ? 'Your order is being prepared and will be on its way soon.' : order.mode==='pickup' ? 'We\'ll have it hot and ready for pickup.' : 'We\'ll have your table and food ready.');
+    state.cart = []; save(); renderCart(); openDlg($('#dDone'));
+    f.reset();
+  } finally { btn.disabled = false; btn.textContent = 'Place order'; }
+});
+
+/* =========================================================
+   8. MISC INIT
+   ========================================================= */
+$('#notify').onclick = () => toast('Thanks! We\'ll let you know when vouchers launch.');
+$$('[data-soon]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); toast('The mobile app is coming soon.'); }));
+$('#yr').textContent = new Date().getFullYear();
+$('#iAddr').textContent  = '📍 ' + TCC.address;
+$('#iPhone').textContent = '📞 ' + TCC.phone;
+$('#iMail').textContent  = '✉️ ' + TCC.email;
+$('#iHours').innerHTML = TCC.hours.map(([d,h]) => `<li><b style="color:var(--ink)">${d}</b> &nbsp; ${h}</li>`).join('');
+
+renderHero(); restartAuto(); renderCats(); renderMenu(); updateChip(); renderCart();
+</script>
+</body>
+</html>
